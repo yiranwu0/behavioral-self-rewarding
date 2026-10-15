@@ -1,0 +1,141 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "behavioral-self-rewarding"
+version = "0.1.0"
+description = "Behavioral Self-Rewarding for software engineering agents"
+authors = [
+    {name = "Yiran Wu"},
+    {name = "Andrew Zhao"},
+    {name = "Yurui Chang"},
+    {name = "Qingyun Wu"},
+    {name = "Xuan Feng"},
+]
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+]
+license = "Apache-2.0 AND MIT"
+license-files = ["LICENSE", "licenses/NOTICE", "licenses/THIRD_PARTY_NOTICES.md", "rllm/rewards/code_utils/pyext2.py"]
+dependencies = [
+    # Core ML/AI packages
+    "torch>=2.7",
+    "transformers",
+    "accelerate",
+    "sentence-transformers",
+
+    # Training and inference
+    "peft",
+
+    # Data processing
+    "datasets",
+    "polars",
+    "dm-tree",
+
+    # Cloud and infrastructure
+    "google-cloud-aiplatform",
+    "vertexai",
+    "kubernetes",
+    "ray",
+
+    # Web and automation
+    "gradio",
+    "firecrawl",
+
+    # Math and science
+    "latex2sympy2",
+    "pylatexenc",
+    "nltk",
+    "scipy",
+    "scikit-learn",
+
+    # Code evaluation
+    "swebench",
+    "e2b_code_interpreter",
+
+    # Utilities
+    "fire",
+    "gdown",
+    "tabulate",
+    "sortedcontainers",
+    "PyMuPDF",
+    "together",
+    "openai",
+    "wandb",
+    "pybind11",
+    "gym",
+
+]
+
+[project.urls]
+Repository = "https://github.com/yiranwu0/behavioral-self-rewarding"
+Paper = "https://arxiv.org/abs/2610.12598"
+Homepage = "https://yiranwu0.github.io/projects/bsr/"
+
+[project.optional-dependencies]
+gpu = ["flash-attn>=2.8.0.post2", "vllm>=0.8.3"]
+browser = ["browsergym", "selenium"]
+dev = ["pytest", "pre-commit", "ruff", "mypy", "build"]
+
+[tool.ruff]
+line-length = 5000 # TODO: Reduce this to a more reasonable value
+
+[tool.ruff.lint]
+isort = {known-first-party = ["rllm"]}
+# c.f. https://github.com/vllm-project/vllm/blob/ce8d6b75fc0586045df75ee1568a5b5f9957251b/pyproject.toml
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgr
+    "UP",
+    # flake8-bugbear
+    "B",
+    # isort
+    "I",
+    "G",
+]
+ignore = [
+    # star imports
+    "F405", "F403",
+    # lambda expression assignment
+    "E731",
+    # Loop control variable not used within loop body
+    "B007",
+    # f-string format
+    "UP032",
+    # `.log()` statement uses f-string
+    "G004",
+    # equality check using x == True
+    "E712", 
+]
+
+[tool.ruff.lint.per-file-ignores]
+"rllm/rewards/code_utils/**" = ["ALL"]
+
+[tool.setuptools.packages.find]
+where   = ["."]
+include = ["rllm", "rllm.*"]
+
+[tool.setuptools.package-data]
+rllm = ["trainer/config/*.yaml"]
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+check_untyped_defs = true
+follow_imports = "silent"
+
+exclude = [
+    "verl/.*",
+    "rllm/rewards/code_utils/.*",
+    "rllm/rewards/math_utils/.*",
+    "scripts/.*",
+    "tests/.*",
+    "docs/.*",
+]

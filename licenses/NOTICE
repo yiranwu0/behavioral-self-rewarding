@@ -1,0 +1,17 @@
+Behavioral Self-Rewarding (BSR)
+https://github.com/yiranwu0/behavioral-self-rewarding
+
+BSR authors: Yiran Wu, Andrew Zhao, Yurui Chang, Qingyun Wu, Xuan Feng.
+
+This distribution includes and modifies code from rLLM / the Agentica
+Project and follows the DeepSWE training recipe. BSR adds behavioral
+pairwise judging, task-local reward refinement, and training integration.
+The Python namespace remains rllm for compatibility with this codebase.
+
+Bundled dependencies include R2E-Gym and veRL, and the vllm_patch directory
+contains modified vLLM source. Their original copyright notices and
+Apache License 2.0 terms are retained. Additional third-party notices,
+including the MIT-licensed pyext2 helper, are in THIRD_PARTY_NOTICES.md.
+
+This notice describes attribution and modifications; it does not change
+the terms of LICENSE or individual third-party licenses.
